@@ -1,0 +1,35 @@
+services:
+  vue-app:
+    build:
+      context: ./vue-app
+    ports:
+      - "127.0.0.1:12543:12543"
+    volumes:
+      - ./vue-app/src:/app/src
+      - ./vue-app/package.json:/app/package.json
+      - ./vue-app/vue.config.js:/app/vue.config.js
+    networks:
+      - shared-network
+      - demo-db
+
+  vuetify:
+    build:
+      context: ./vuetify
+    ports:
+      - "127.0.0.1:12345:12345"
+    volumes:
+      - ./vuetify/src:/app/src
+      - ./vuetify/package.json:/app/package.json
+      - ./vuetify/vite.config.mjs:/app/vite.config.mjs
+    networks:
+      - shared-network
+      - demo-db
+
+
+
+networks:
+  demo-db:
+    driver: bridge
+
+  shared-network:
+    external: true
